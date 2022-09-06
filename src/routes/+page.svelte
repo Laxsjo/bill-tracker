@@ -1,5 +1,12 @@
 <script lang="ts">
 	import Counter from '$lib/Counter.svelte';
+	import { onMount } from 'svelte';
+
+	let env = import.meta.env;
+
+	onMount(() => {
+		console.log('Env:', env);
+	});
 </script>
 
 <svelte:head>
