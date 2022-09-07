@@ -8,7 +8,7 @@
 	let env = import.meta.env;
 
 	onMount(() => {
-		console.log('Env:', env, 'SecretEnv:', data.secretEnv);
+		console.log('Env:', env, 'Row:', data.examples);
 	});
 </script>
 
@@ -34,6 +34,28 @@
 	</h2>
 
 	<Counter />
+</section>
+<section>
+	<h2>Example database row</h2>
+
+	<table>
+		<thead>
+			<tr>
+				<td>exampleId</td>
+				<td>text</td>
+				<td>numbers</td>
+			</tr>
+		</thead>
+		<tbody>
+			{#each data.examples as example}
+				<tr>
+					<td>{example.exampleId}</td>
+					<td>{example.text}</td>
+					<td>{JSON.stringify(example.numbers)}</td>
+				</tr>
+			{/each}
+		</tbody>
+	</table>
 </section>
 
 <style>
@@ -63,5 +85,11 @@
 		height: 100%;
 		top: 0;
 		display: block;
+	}
+
+	table,
+	table td {
+		border: 1px solid var(--heading-color);
+		border-collapse: collapse;
 	}
 </style>
