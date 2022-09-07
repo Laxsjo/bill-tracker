@@ -1,11 +1,14 @@
 <script lang="ts">
 	import Counter from '$lib/Counter.svelte';
+	import type { PageData, PageServerData } from './$types';
 	import { onMount } from 'svelte';
+
+	export let data: PageData;
 
 	let env = import.meta.env;
 
 	onMount(() => {
-		console.log('Env:', env);
+		console.log('Env:', env, 'SecretEnv:', data.secretEnv);
 	});
 </script>
 

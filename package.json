@@ -2,9 +2,9 @@
 	"name": "bill-tracker",
 	"version": "0.0.1",
 	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build",
-		"preview": "vite preview",
+		"dev": "env-cmd vite dev",
+		"build": "env-cmd vite build",
+		"preview": "env-cmd vite preview",
 		"test": "playwright test",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
@@ -35,7 +35,9 @@
 	"dependencies": {
 		"@fontsource/fira-mono": "^4.5.0",
 		"@sveltejs/adapter-node": "^1.0.0-next.88",
-		"cookie": "^0.4.1"
+		"cookie": "^0.4.1",
+		"dotenv": "^16.0.2",
+		"env-cmd": "^10.1.0"
 	},
 	"engines": {
 		"node": "16.14"
