@@ -40,7 +40,7 @@ jobs:
       - name: Deploy with rsync
         run: rsync -avz ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/ally/bill-tracker/
         
-      - name: Restart Node Server
+      - name: Build Node Server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -49,8 +49,5 @@ jobs:
           port: 22
           script: |
             cd ~/bill-tracker/
-            git fetch origin master
-            git reset --hard FETCH_HEAD
-            git clean -d -f --exclude secrets
             npm install --production
             npm run build
