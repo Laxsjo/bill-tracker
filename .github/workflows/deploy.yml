@@ -39,17 +39,21 @@ jobs:
       
       - name: Deploy with rsync
         run: rsync -avz --exclude '.git' ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/ally/bill-tracker/
-        
-      - name: Build Node Server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          debug: true
-          script: |
-            cd ~/bill-tracker/
-            whoami > ../debugLog
-            compgen -c >> ../debugLog
-            # npm install --production
-            # npm run build
+       
+      - name: Reminder
+        run: |
+          echo "Remember to manually run npm install, npx prisma generate, npm run build."
+          echo "This is temporary, untill i figure out a way to do this automatically."
+      # - name: Build Node Server
+      #  uses: appleboy/ssh-action@master
+      #  with:
+      #    host: ${{ secrets.SSH_HOST }}
+      #    username: ${{ secrets.SSH_USER }}
+      #    key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #    debug: true
+      #    script: |
+      #      cd ~/bill-tracker/
+      #      whoami > ../debugLog
+      #      compgen -c >> ../debugLog
+      #      # npm install --production
+      #      # npm run build
