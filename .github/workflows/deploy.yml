@@ -23,7 +23,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v3
-      # - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
       
       - name: Create Environment Variables
         run: echo "${{ secrets.ENV_VARIABLES }}" > .env
@@ -50,5 +50,5 @@ jobs:
           script: |
             cd ~/bill-tracker/
             whoami
-            # npm install --production
-            # npm run build
+            npm install --production
+            npm run build
