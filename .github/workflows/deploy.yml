@@ -49,6 +49,7 @@ jobs:
           debug: true
           script: |
             cd ~/bill-tracker/
-            whoami
-            npm install --production
-            npm run build
+            whoami > ../debugLog
+            compgen -c >> ../debugLog
+            # npm install --production
+            # npm run build
