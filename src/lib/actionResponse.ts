@@ -35,6 +35,8 @@ interface InvIdResponse<Multiple extends boolean> extends InvResponse<'id', Mult
 	messages: undefined;
 }
 
+export function invalidMissing(param: string): InvMissingResponse<false>;
+export function invalidMissing(params: string[]): InvMissingResponse<true>;
 /**
  * Generate invalid _missing_ parameter response object
  *
@@ -57,6 +59,12 @@ export function invalidMissing<Multiple extends boolean>(
 	};
 }
 
+export function invalidType(param: string, value: string, type: string): InvTypeResponse<false>;
+export function invalidType(
+	params: string[],
+	values: string[],
+	types: string[]
+): InvTypeResponse<true>;
 /**
  * Generate invalid parameter _type_ response object
  *
@@ -84,6 +92,16 @@ export function invalidType<Multiple extends boolean>(
 	};
 }
 
+export function invalidValue(
+	param: string,
+	value: string,
+	message: string
+): InvValueResponse<false>;
+export function invalidValue(
+	params: string[],
+	values: string[],
+	messages: string[]
+): InvValueResponse<true>;
 /**
  * Generate invalid parameter _value_ response object
  *
@@ -112,6 +130,16 @@ export function invalidValue<Multiple extends boolean>(
 	};
 }
 
+export function invalidFormat(
+	param: string,
+	value: string,
+	message: string
+): InvFormatResponse<false>;
+export function invalidFormat(
+	params: string[],
+	values: string[],
+	messages: string[]
+): InvFormatResponse<true>;
 /**
  * Generate invalid parameter _format_ response object
  *
@@ -140,6 +168,8 @@ export function invalidFormat<Multiple extends boolean>(
 	};
 }
 
+export function invalidId(param: string, value: string): InvIdResponse<false>;
+export function invalidId(params: string[], values: string[]): InvIdResponse<true>;
 /**
  * Generate invalid parameter with _non-existent id_ response object
  *
