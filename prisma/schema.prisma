@@ -9,6 +9,15 @@ datasource db {
 
 model example {
   exampleId Int     @id(map: "examplename_pkey") @default(autoincrement()) @map("example_id")
-  text       String?
-  numbers    Int[]
+  text      String?
+  numbers   Int[]
+}
+
+model User {
+  id            Int      @id @default(autoincrement())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  username      String   @unique
+  passwordHash  String
+  userAuthToken String   @unique @default(cuid())
 }
