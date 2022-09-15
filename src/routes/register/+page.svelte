@@ -1,35 +1,16 @@
 <script lang="ts">
 	import { send } from '$lib/api';
 	import type { ActionData } from './$types';
+	import type { InvResponse, InvResponseType } from '$lib/actionResponse';
+	import { enhance } from '$app/forms';
 
-	// these props are passed from the page endpoint
-	// so the user can get feedback if JavaScript doesn't work
-	export let error: string;
-	export let success: string;
+	// export let form: ActionData; // Sveltekit appears broken, ActionData is always 'unknown'
+	export let form: (InvResponse<InvResponseType, boolean> & { success: true }) | undefined; // This is not type safe, but it will have to do...
 
-	export let form: ActionData;
-
-	// this runs on the client when JavaScript is available
-	// so we can just reuse the existing `error` and `success` props
-	// async function register(event: SubmitEvent) {
-	// 	error = '';
-
-	// 	const formEl = event.target as HTMLFormElement;
-	// 	const response = await send(formEl);
-
-	// 	if (response.error) {
-	// 		error = response.error;
-	// 	}
-
-	// 	if (response.success) {
-	// 		success = response.success;
-	// 	}
-
-	// 	formEl.reset(); // using the web platform 💪
-	// }
+	$: if (form) console.log('Recieved response:', form);
 </script>
 
-<form method="post">
+<form method="post" use:enhance>
 	<div>
 		<label for="username">Username</label>
 		<input id="username" name="username" type="text" required />
@@ -37,16 +18,20 @@
 
 	<div>
 		<label for="password">Password</label>
-		<input id="password" name="password" type="password" required />
+		<input id="password" name="password" type="password" value="" required />
 	</div>
 
-	{#if error}
-		<p class="error">{error}</p>
+	{#if form?.type === 'id'}
+		<p class="error">username {form?.values} already exists</p>
+	{:else if 'type' in (form ?? {})}
+		<p class="error">
+			Error, sorry to lazy to tell you why.<!-- {generateResponseUIText(form)} -->
+		</p>
 	{/if}
 
-	{#if success}
+	{#if form?.success}
 		<p>Thank you for signing up!</p>
-		<p><a href="/auth/login">You can log in.</a></p>
+		<p><a href="/login">You can now log in.</a></p>
 	{/if}
 
 	<button type="submit">Sign Up</button>

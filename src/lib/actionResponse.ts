@@ -1,39 +1,41 @@
+import _ from 'lodash';
+
 export type InvResponseType = 'missing' | 'type' | 'value' | 'format' | 'id';
 
 type MaybeArray<T, Condition extends boolean> = Condition extends true ? T[] : T;
 
-interface InvResponse<T extends InvResponseType, Multiple extends boolean> {
-	type: T;
-	params: MaybeArray<string, Multiple>;
-	values?: MaybeArray<string, Multiple>;
-	messages?: MaybeArray<string, Multiple>;
-}
+export type InvResponse<T extends InvResponseType, Multiple extends boolean> = {
+	readonly type: T;
+	readonly params: MaybeArray<string, Multiple>;
+	readonly values?: MaybeArray<FormDataEntryValue | null, Multiple>;
+	readonly message?: string;
+};
 
-interface InvMissingResponse<Multiple extends boolean> extends InvResponse<'missing', Multiple> {
-	values: undefined;
-	messages: undefined;
-}
+export type InvMissingResponse<Multiple extends boolean> = InvResponse<'missing', Multiple> & {
+	readonly values: undefined;
+	readonly message: undefined;
+};
 
-interface InvTypeResponse<Multiple extends boolean> extends InvResponse<'type', Multiple> {
-	values: MaybeArray<string, Multiple>;
-	messages: undefined;
-	expectedTypes: MaybeArray<string, Multiple>;
-}
+export type InvTypeResponse<Multiple extends boolean> = InvResponse<'type', Multiple> & {
+	readonly values: MaybeArray<FormDataEntryValue | null, Multiple>;
+	readonly message: undefined;
+	readonly expectedTypes: MaybeArray<string, Multiple>;
+};
 
-interface InvValueResponse<Multiple extends boolean> extends InvResponse<'value', Multiple> {
-	values: MaybeArray<string, Multiple>;
-	messages: MaybeArray<string, Multiple>;
-}
+export type InvValueResponse<Multiple extends boolean> = InvResponse<'value', Multiple> & {
+	readonly values: MaybeArray<FormDataEntryValue | null, Multiple>;
+	readonly message: string;
+};
 
-interface InvFormatResponse<Multiple extends boolean> extends InvResponse<'format', Multiple> {
-	values: MaybeArray<string, Multiple>;
-	messages: MaybeArray<string, Multiple>;
-}
+export type InvFormatResponse<Multiple extends boolean> = InvResponse<'format', Multiple> & {
+	readonly values: MaybeArray<FormDataEntryValue | null, Multiple>;
+	readonly message: string;
+};
 
-interface InvIdResponse<Multiple extends boolean> extends InvResponse<'id', Multiple> {
-	values: MaybeArray<string, Multiple>;
-	messages: undefined;
-}
+export type InvIdResponse<Multiple extends boolean> = InvResponse<'id', Multiple> & {
+	readonly values: MaybeArray<FormDataEntryValue | null, Multiple>;
+	readonly message: undefined;
+};
 
 export function invalidMissing(param: string): InvMissingResponse<false>;
 export function invalidMissing(params: string[]): InvMissingResponse<true>;
@@ -55,14 +57,18 @@ export function invalidMissing<Multiple extends boolean>(
 		type: 'missing',
 		params,
 		values: undefined,
-		messages: undefined
+		message: undefined
 	};
 }
 
-export function invalidType(param: string, value: string, type: string): InvTypeResponse<false>;
+export function invalidType(
+	param: string,
+	value: FormDataEntryValue | null,
+	type: string
+): InvTypeResponse<false>;
 export function invalidType(
 	params: string[],
-	values: string[],
+	values: (FormDataEntryValue | null)[],
 	types: string[]
 ): InvTypeResponse<true>;
 /**
@@ -80,27 +86,27 @@ export function invalidType(
  */
 export function invalidType<Multiple extends boolean>(
 	params: MaybeArray<string, Multiple>,
-	values: MaybeArray<string, Multiple>,
+	values: MaybeArray<FormDataEntryValue | null, Multiple>,
 	types: MaybeArray<string, Multiple>
 ): InvTypeResponse<Multiple> {
 	return {
 		type: 'type',
 		params,
 		values,
-		messages: undefined,
+		message: undefined,
 		expectedTypes: types
 	};
 }
 
 export function invalidValue(
 	param: string,
-	value: string,
+	value: FormDataEntryValue | null,
 	message: string
 ): InvValueResponse<false>;
 export function invalidValue(
 	params: string[],
-	values: string[],
-	messages: string[]
+	values: (FormDataEntryValue | null)[],
+	message: string
 ): InvValueResponse<true>;
 /**
  * Generate invalid parameter _value_ response object
@@ -119,26 +125,26 @@ export function invalidValue(
  */
 export function invalidValue<Multiple extends boolean>(
 	params: MaybeArray<string, Multiple>,
-	values: MaybeArray<string, Multiple>,
-	messages: MaybeArray<string, Multiple>
+	values: MaybeArray<FormDataEntryValue | null, Multiple>,
+	message: string
 ): InvValueResponse<Multiple> {
 	return {
 		type: 'value',
 		params,
 		values,
-		messages
+		message
 	};
 }
 
 export function invalidFormat(
 	param: string,
-	value: string,
+	value: FormDataEntryValue | null,
 	message: string
 ): InvFormatResponse<false>;
 export function invalidFormat(
 	params: string[],
-	values: string[],
-	messages: string[]
+	values: (FormDataEntryValue | null)[],
+	message: string
 ): InvFormatResponse<true>;
 /**
  * Generate invalid parameter _format_ response object
@@ -152,24 +158,27 @@ export function invalidFormat(
  *
  * @param params
  * @param values
- * @param messages
+ * @param message
  * @returns
  */
 export function invalidFormat<Multiple extends boolean>(
 	params: MaybeArray<string, Multiple>,
-	values: MaybeArray<string, Multiple>,
-	messages: MaybeArray<string, Multiple>
+	values: MaybeArray<FormDataEntryValue | null, Multiple>,
+	message: string
 ): InvFormatResponse<Multiple> {
 	return {
 		type: 'format',
 		params,
 		values,
-		messages
+		message
 	};
 }
 
-export function invalidId(param: string, value: string): InvIdResponse<false>;
-export function invalidId(params: string[], values: string[]): InvIdResponse<true>;
+export function invalidId(param: string, value: FormDataEntryValue | null): InvIdResponse<false>;
+export function invalidId(
+	params: string[],
+	values: (FormDataEntryValue | null)[]
+): InvIdResponse<true>;
 /**
  * Generate invalid parameter with _non-existent id_ response object
  *
@@ -186,12 +195,57 @@ export function invalidId(params: string[], values: string[]): InvIdResponse<tru
  */
 export function invalidId<Multiple extends boolean>(
 	params: MaybeArray<string, Multiple>,
-	values: MaybeArray<string, Multiple>
+	values: MaybeArray<FormDataEntryValue | null, Multiple>
 ): InvIdResponse<Multiple> {
 	return {
 		type: 'id',
 		params,
 		values,
-		messages: undefined
+		message: undefined
 	};
+}
+
+function generateUIOrList(items: string[]): string {
+	if (items.length > 1) {
+		items = [..._.initial(items), 'or', ..._.takeRight(items, 1)];
+		items = [..._.map(_.dropRight(items, 2), (param) => `${param},`), ..._.takeRight(items, 2)];
+	}
+	return items.join(' ');
+}
+
+export function generateResponseUIText<T extends InvResponseType, M extends boolean>(
+	response: InvResponse<T, M>
+): string {
+	let param = response.params as string[] | string;
+
+	switch (response.type) {
+		case 'value':
+			if (_.isArray(param)) {
+				param = generateUIOrList(param);
+				return `${param} are not ${response.message}`;
+			}
+
+			return `${param} is not ${response.message}`;
+		case 'format':
+			if (_.isArray(param)) {
+				param = generateUIOrList(param);
+				return `${param} are not ${response.message}`;
+			}
+
+			return `${param} is not ${response.message}`;
+		case 'id':
+			if (_.isArray(param)) {
+				param = generateUIOrList(param);
+				return `invalid value for ${param}`;
+			}
+
+			return `invalid value for ${param}`;
+			break;
+
+		case 'missing':
+		case 'type':
+		default:
+			break;
+	}
+	return 'An error occurred';
 }
