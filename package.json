@@ -42,7 +42,8 @@
 		"bcrypt": "^5.0.1",
 		"cookie": "^0.4.1",
 		"joi": "^17.6.0",
-		"lodash": "^4.17.21"
+		"lodash": "^4.17.21",
+		"svelte-material-icons": "^2.0.4"
 	},
 	"engines": {
 		"node": "16.14"
