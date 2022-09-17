@@ -1,5 +1,4 @@
 // import {pageLoad} from "$types"
-import { browser } from '$app/environment';
 import type { PageLoad } from './$types';
 // import 'dotenv/config';
 

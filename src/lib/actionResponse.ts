@@ -57,7 +57,7 @@ export function invalidMissing<Multiple extends boolean>(
 		type: 'missing',
 		params,
 		values: undefined,
-		message: undefined
+		message: undefined,
 	};
 }
 
@@ -94,7 +94,7 @@ export function invalidType<Multiple extends boolean>(
 		params,
 		values,
 		message: undefined,
-		expectedTypes: types
+		expectedTypes: types,
 	};
 }
 
@@ -120,7 +120,7 @@ export function invalidValue(
  *
  * @param params
  * @param values
- * @param messages
+ * @param message
  * @returns
  */
 export function invalidValue<Multiple extends boolean>(
@@ -132,7 +132,7 @@ export function invalidValue<Multiple extends boolean>(
 		type: 'value',
 		params,
 		values,
-		message
+		message,
 	};
 }
 
@@ -170,7 +170,7 @@ export function invalidFormat<Multiple extends boolean>(
 		type: 'format',
 		params,
 		values,
-		message
+		message,
 	};
 }
 
@@ -201,7 +201,7 @@ export function invalidId<Multiple extends boolean>(
 		type: 'id',
 		params,
 		values,
-		message: undefined
+		message: undefined,
 	};
 }
 
@@ -240,7 +240,6 @@ export function generateResponseUIText<T extends InvResponseType, M extends bool
 			}
 
 			return `invalid value for ${param}`;
-			break;
 
 		case 'missing':
 		case 'type':

@@ -1,10 +1,9 @@
 import { invalid, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 import * as bcrypt from 'bcrypt';
-import * as cookie from 'cookie';
 import { db } from '$lib/database';
 import { unpackFormData } from '$lib/formUtils';
-import * as Joi from 'joi';
+import Joi from 'joi';
 
 export const actions: Actions = {
 	default: async ({ cookies, request }) => {

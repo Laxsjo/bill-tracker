@@ -1,8 +1,7 @@
 <script lang="ts">
 	import Header from '$lib/header/Header.svelte';
-	import { onMount } from 'svelte';
-	// import { navigating } from '$app/stores';
 	import '../app.css';
+	import '$lib/styles/definitions.scss';
 	import { beforeNavigate } from '$app/navigation';
 	import type { LayoutServerData } from './$types';
 

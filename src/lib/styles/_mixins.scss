@@ -1,0 +1,7 @@
+@mixin Clickable($background-color: grey) {
+	&:active {
+		// background-color: $background-color;
+
+		transition: background-color ease 300ms;
+	}
+}

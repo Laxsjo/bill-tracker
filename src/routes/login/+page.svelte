@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import type { ActionData } from './$types';
+	import PasswordToggle from '$lib/components/PasswordToggle.svelte';
+	import Test from '$lib/components/Test.svelte';
+	// import type { ActionData } from './$types';
 
 	// export let form: ActionData;
 	export let form: any;
@@ -13,7 +15,8 @@
 	</div>
 	<div>
 		<label for="password">Password</label>
-		<input id="password" name="password" type="password" required />
+		<PasswordToggle />
+		<!-- <input id="password" name="password" type="password" required /> -->
 	</div>
 	<!-- <div>
 		<label for="number">number</label>
@@ -25,11 +28,12 @@
 	{#if form?.error}
 		<p class="error">{form.error}</p>
 	{/if}
-
-	<!-- {#if form?.success}
-		<p>{JSON.stringify(form?.success)}</p>
-	{/if} -->
 </form>
+<div>
+	<br />
+	<br />
+	<Test />
+</div>
 
 <style>
 	.error {

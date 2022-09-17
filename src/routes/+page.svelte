@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Counter from '$lib/Counter.svelte';
-	import type { PageData, PageServerData } from './$types';
+	import type { PageData } from './$types';
 	import { onMount } from 'svelte';
 
 	export let data: PageData;

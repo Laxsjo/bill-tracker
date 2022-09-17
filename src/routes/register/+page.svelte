@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { send } from '$lib/api';
-	import type { ActionData } from './$types';
 	import type { InvResponse, InvResponseType } from '$lib/actionResponse';
 	import { enhance } from '$app/forms';
 

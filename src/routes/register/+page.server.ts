@@ -1,8 +1,8 @@
 import { invalid } from '@sveltejs/kit';
 import type { Actions } from './$types';
-import { invalidFormat, invalidId, invalidMissing, invalidType } from '$lib/actionResponse';
+// import { invalidFormat, invalidId, invalidMissing, invalidType } from '$lib/actionResponse';
 import * as bcrypt from 'bcrypt';
-import * as Joi from 'joi';
+import Joi from 'joi';
 
 import { db } from '$lib/database';
 import { unpackFormData } from '$lib/formUtils';

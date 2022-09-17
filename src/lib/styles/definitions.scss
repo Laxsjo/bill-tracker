@@ -1,0 +1,46 @@
+:root {
+	--gapSection3: 2.4rem;
+	--gapSection2: 1.8rem;
+	--gapSection1: 1.5rem;
+	--gapPair: 1rem;
+	--gapWithinPair: 0.6rem;
+	--gapWithinSubPair: 0.3rem;
+
+	--containerPadding-main: clamp(1.2rem, 0.4rem + 1.7vw, 2.5rem);
+	--containerPadding-page: clamp(1rem, 0.4rem + 1.5vw, 1.8rem);
+	--containerPadding-fieldset: 1rem;
+	--containerPadding-medium: 0.6rem;
+	--containerPadding-small: 0.4rem;
+
+	--paragraphWidth-thin: calc(5ch + 10vw);
+	--paragraphWidth-medium: calc(12ch + 17.5vw);
+	--paragraphWidth-wide: calc(15ch + 30vw);
+
+	--paragraphMinWidth-thin: min(30ch, 100%);
+	--paragraphMinWidth-medium: min(40ch, 100%);
+	--paragraphMinWidth-wide: min(50ch, 100%);
+
+	--inputWidth: 25ch;
+
+	--borderRadius-small: 0.2rem;
+	--borderRadius-medium: 0.4rem;
+	--borderRadius-large: 0.6rem;
+
+	--duration-veryLong: 1.5s;
+	--duration-long: 0.8s;
+	--duration-medium: 0.5s;
+	--duration-short: 0.3s;
+	--duration-veryShort: 0.2s;
+
+	--headerSize1: clamp(1.6rem, 0.5rem + 2vw, 2.4rem);
+	--headerSize2: clamp(1.3rem, 0.4rem + 1.6vw, 1.6rem);
+	--headerSize3: 1.1rem;
+	--headerSize4: 1rem;
+
+	--fieldsetHeaderSize: clamp(1.1rem, 0.2rem + 1.2vw, 1.4rem);
+	--fieldsetHeaderSize-nested: clamp(1rem, 0.2rem + 1vw, 1.2rem);
+
+	--font-normal: 'Atkinson Hyperlegible', Arial, sans-serif;
+	--font-heading: 'Poppins', 'Atkinson Hyperlegible', Arial, sans-serif;
+	--font-input: 'Noto Sans Display', Arial, sans-serif;
+}
