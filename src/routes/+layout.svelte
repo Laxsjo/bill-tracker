@@ -1,13 +1,18 @@
 <script lang="ts">
 	import Header from '$lib/header/Header.svelte';
-	import '../app.css';
+	import '../app.scss';
 	import '$lib/styles/definitions.scss';
 	import { beforeNavigate } from '$app/navigation';
 	import type { LayoutServerData } from './$types';
+	import { loggedIn } from '$lib/stores';
 
 	export let data: LayoutServerData;
 
+	loggedIn.set(data.userId !== undefined);
+
 	beforeNavigate((navigation) => {
+		loggedIn.set(data.userId !== undefined);
+
 		if (data.userId === undefined) {
 			const allowedPaths = ['login', 'register'];
 			if (navigation.to && !allowedPaths.includes(navigation.to.routeId ?? '')) {

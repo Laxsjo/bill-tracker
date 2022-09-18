@@ -6,7 +6,6 @@
 	import { lerp } from '$lib/util';
 	import ClickHighlight from './ClickHighlight.svelte';
 	import { onDestroy, onMount } from 'svelte';
-	import { func } from 'joi';
 
 	export let name: string = '';
 	export let id: string = '';
@@ -100,11 +99,11 @@
 	<button on:click={handleClick} bind:this={button} type="button">
 		{#if shown}
 			<span class="first" transition:diagonalReveal={{ reversed: true }}>
-				<EyeOutline />
+				<EyeOutline color="var(--fc-input-fg)" />
 			</span>
 		{:else}
 			<span class="second" transition:diagonalReveal={{ reversed: false }}>
-				<EyeOffOutline />
+				<EyeOffOutline color="var(--fc-input-fg)" />
 			</span>
 		{/if}
 		<ClickHighlight parent={button} />
@@ -123,20 +122,22 @@
 		place-items: center;
 		position: relative;
 
-		padding: 0.2em;
+		padding: 0.1em;
+
+		font-size: 1.1em;
 
 		border-radius: 50%;
+		border: 2px solid transparent;
 
-		background-color: hsl(210 10% 25%);
+		background-color: transparent;
 		@include m.Clickable();
 
 		&:hover,
 		&:focus-visible {
-			background-color: hsl(210 10% 35%);
+			background-color: var(--fc-button-transparent-bg--hover);
 		}
-
 		&:active {
-			background-color: hsl(210 15% 20%);
+			background-color: transparent;
 		}
 	}
 	button span {

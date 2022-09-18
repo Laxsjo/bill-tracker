@@ -15,7 +15,7 @@
 	</div>
 	<div>
 		<label for="password">Password</label>
-		<PasswordToggle />
+		<PasswordToggle name="password" />
 		<!-- <input id="password" name="password" type="password" required /> -->
 	</div>
 	<!-- <div>

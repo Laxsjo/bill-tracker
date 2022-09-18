@@ -1,10 +1,10 @@
 :root {
-	--gapSection3: 2.4rem;
-	--gapSection2: 1.8rem;
-	--gapSection1: 1.5rem;
-	--gapPair: 1rem;
-	--gapWithinPair: 0.6rem;
-	--gapWithinSubPair: 0.3rem;
+	--gap-900: 2.4rem;
+	--gap-800: 1.8rem;
+	--gap-700: 1.5rem;
+	--gap-400: 1rem;
+	--gap-200: 0.6rem;
+	--gap-100: 0.3rem;
 
 	--containerPadding-main: clamp(1.2rem, 0.4rem + 1.7vw, 2.5rem);
 	--containerPadding-page: clamp(1rem, 0.4rem + 1.5vw, 1.8rem);
@@ -43,4 +43,23 @@
 	--font-normal: 'Atkinson Hyperlegible', Arial, sans-serif;
 	--font-heading: 'Poppins', 'Atkinson Hyperlegible', Arial, sans-serif;
 	--font-input: 'Noto Sans Display', Arial, sans-serif;
+
+	--fc-main-bg: hsl(223, 78%, 7%);
+	--fc-main-fg: hsl(217, 19%, 73%);
+	--fc-main-accent-fg: hsl(177, 85%, 38%);
+	--fc-main-accent-secondary-fg: hsl(6, 85%, 32%);
+	--fc-main-title-fg: hsl(0 0% 100%);
+	--fc-main-link: hsl(287, 45%, 49%);
+	--fc-main-link--hover: hsl(287, 45%, 60%);
+
+	--fc-header-bg: hsl(223, 78%, 7%);
+	--fc-header-fg: hsl(0 0% 100%);
+	--fc-header-fg--hover: hsl(230 6% 82%);
+	--fc-header-border: hsl(225, 12%, 34%);
+
+	--fc-logo-fg: hsl(217 15% 47%);
+
+	--fc-button-transparent-bg--hover: hsl(217 10% 35% / 0.7);
+	--fc-input-bg: hsl(223 48% 27%);
+	--fc-input-fg: hsl(0 0% 100%);
 }
