@@ -11,6 +11,8 @@
 	loggedIn.set(data.userId !== undefined);
 
 	beforeNavigate((navigation) => {
+		console.log(data);
+
 		loggedIn.set(data.userId !== undefined);
 
 		if (data.userId === undefined) {

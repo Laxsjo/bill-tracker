@@ -50,7 +50,12 @@ export const actions: Actions = {
 			});
 
 			const days100 = 100 * 24 * 60 * 60;
-			cookies.set('session', token, { maxAge: days100, httpOnly: false, sameSite: 'strict' });
+			cookies.set('session', token, {
+				maxAge: days100,
+				httpOnly: false,
+				sameSite: 'strict',
+				secure: false,
+			});
 		} catch (e) {
 			if (e instanceof Joi.ValidationError) {
 				console.log(e);
