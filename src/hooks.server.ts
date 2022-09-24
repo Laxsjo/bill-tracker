@@ -1,5 +1,7 @@
 import { db } from '$lib/database';
 import type { Handle } from '@sveltejs/kit';
+import { createTRPCHandle } from 'trpc-sveltekit';
+import { router } from '$lib/trpc/server';
 // import * as cookie from 'cookie';
 
 export const handle: Handle = async ({ event, resolve }) => {
@@ -11,12 +13,20 @@ export const handle: Handle = async ({ event, resolve }) => {
 		if (!allowedPaths.includes(event.routeId ?? '')) {
 			return new Response('Redirect', {
 				status: 303,
-				headers: { Location: '/login' }
+				headers: { Location: '/login' },
 			});
 		}
 	} else {
 		event.locals.userId = user.id;
 	}
 
-	return await resolve(event);
+	const response = await createTRPCHandle({
+		url: '/trpc',
+		router,
+		event,
+		resolve,
+	});
+
+	return response;
+	// return await resolve(event);
 };
