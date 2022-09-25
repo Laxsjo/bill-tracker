@@ -2,28 +2,39 @@ import { invalid, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 import * as bcrypt from 'bcrypt';
 import { db } from '$lib/database';
-import { unpackFormData } from '$lib/formUtils';
-import Joi from 'joi';
+// import { unpackFormData } from '$lib/utilities/form';
+import { z } from 'zod';
+import { zfd } from 'zod-form-data';
+// import Joi from 'joi';
 
 export const actions: Actions = {
 	default: async ({ cookies, request }) => {
 		// const data = await request.formData();
 
-		type Schema = {
-			username: string;
-			password: string;
-		};
-		const schema = Joi.object<Schema>({
-			username: Joi.string()
-				.regex(/[a-z0-9_]+/i)
-				.min(3)
-				.max(20)
-				.required(),
-			password: Joi.string().required(),
+		const schema = zfd.formData({
+			username: zfd.text(
+				z
+					.string()
+					.regex(/[a-z0-9_]+/i)
+					.min(3)
+					.max(20)
+			),
+			password: zfd.text(),
 		});
+		// type Schema = z.infer<typeof schema>;
+
+		// const schema = Joi.object<Schema>({
+		// 	username: Joi.string()
+		// 		.regex(/[a-z0-9_]+/i)
+		// 		.min(3)
+		// 		.max(20)
+		// 		.required(),
+		// 	password: Joi.string().required(),
+		// });
 
 		try {
-			const data: Schema = Joi.attempt(unpackFormData(await request.formData()), schema);
+			const data = schema.parse(await request.formData());
+			// const data: Schema = Joi.attempt(unpackFormData(await request.formData()), schema);
 
 			let user;
 			try {
@@ -57,7 +68,8 @@ export const actions: Actions = {
 				secure: false,
 			});
 		} catch (e) {
-			if (e instanceof Joi.ValidationError) {
+			// if (e instanceof Joi.ValidationError) {
+			if (e instanceof z.ZodError) {
 				console.log(e);
 				return invalid(400, { error: e.message });
 			}

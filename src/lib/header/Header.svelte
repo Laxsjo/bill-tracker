@@ -12,7 +12,7 @@
 		<Nav
 			pages={[
 				{ url: '/', name: 'Home' },
-				{ url: '/bills/new', name: 'New' },
+				{ url: '/receipt/new', name: 'New' },
 				{ url: '/about', name: 'About' },
 				{ url: '/login', name: 'Login' },
 				{ url: '/register', name: 'register' },

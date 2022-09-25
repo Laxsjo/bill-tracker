@@ -1,28 +1,40 @@
 import { invalid } from '@sveltejs/kit';
 import type { Actions } from './$types';
-// import { invalidFormat, invalidId, invalidMissing, invalidType } from '$lib/actionResponse';
 import * as bcrypt from 'bcrypt';
-import Joi from 'joi';
+// import Joi from 'joi';
+import { z } from 'zod';
+import { zfd } from 'zod-form-data';
 
 import { db } from '$lib/database';
-import { unpackFormData } from '$lib/formUtils';
+// import { unpackFormData } from '$lib/utilities/form';
 
 export const actions: Actions = {
 	default: async ({ request }) => {
-		type Schema = {
-			username: string;
-			password: string;
-		};
-		const schema = Joi.object<Schema>({
-			username: Joi.string()
-				.regex(/[a-z0-9_]+/i)
-				.min(3)
-				.max(20)
-				.required(),
-			password: Joi.string().min(10).max(50).required(),
+		const schema = zfd.formData({
+			username: zfd.text(
+				z
+					.string()
+					.regex(/[z-z0-9_]+/i)
+					.min(3)
+					.max(20)
+			),
+			password: zfd.text(z.string().min(10).max(50)),
 		});
+		// type Schema = {
+		// 	username: string;
+		// 	password: string;
+		// };
+		// const schema = Joi.object<Schema>({
+		// 	username: Joi.string()
+		// 		.regex(/[a-z0-9_]+/i)
+		// 		.min(3)
+		// 		.max(20)
+		// 		.required(),
+		// 	password: Joi.string().min(10).max(50).required(),
+		// });
 		try {
-			const data: Schema = Joi.attempt(unpackFormData(await request.formData()), schema);
+			// const data: Schema = Joi.attempt(unpackFormData(await request.formData()), schema);
+			const data = schema.parse(await request.formData());
 
 			const passwordHash = await bcrypt.hash(data.password, 10);
 
@@ -42,7 +54,8 @@ export const actions: Actions = {
 
 			return { success: true };
 		} catch (e) {
-			if (e instanceof Joi.ValidationError) {
+			// if (e instanceof Joi.ValidationError) {
+			if (e instanceof z.ZodError) {
 				console.log(e);
 				return invalid(400, { error: e.message });
 			}
@@ -50,48 +63,3 @@ export const actions: Actions = {
 		}
 	},
 };
-
-// export const POST: RequestHandler = async ({ request }) => {
-// 	const form = await request.formData();
-// 	const username = form.get('username');
-// 	const password = form.get('password');
-
-// 	if (typeof username !== 'string' || typeof password !== 'string') {
-// 		return new Response({error: 'Something went horribly wrong.'}, {}) {
-// 			status: 500,
-// 			body: {
-// 				error: 'Something went horribly wrong.'
-// 			}
-// 		};
-// 	}
-
-// 	if (!username || !password) {
-// 		return {
-// 			status: 400,
-// 			body: {
-// 				error: 'Username and password is required.'
-// 			}
-// 		};
-// 	}
-
-// 	try {
-// 		await db.user.create({
-// 			data: {
-// 				username,
-// 				passwordHash: await bcrypt.hash(password, 10)
-// 			}
-// 		});
-
-// 		return {
-// 			status: 200,
-// 			body: { success: 'Success.' }
-// 		};
-// 	} catch (error) {
-// 		return {
-// 			status: 400,
-// 			body: {
-// 				error: 'User already exists.'
-// 			}
-// 		};
-// 	}
-// };

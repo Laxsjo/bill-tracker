@@ -46,6 +46,8 @@
 
 	--fc-main-bg: hsl(223, 78%, 7%);
 	--fc-main-fg: hsl(217, 19%, 73%);
+	--fc-main-fg--grey: hsl(217, 19%, 58%);
+	--fc-main-fg--irrelevant: hsl(217, 19%, 48%);
 	--fc-main-accent-fg: hsl(177, 85%, 38%);
 	--fc-main-accent-secondary-fg: hsl(6, 85%, 32%);
 	--fc-main-title-fg: hsl(0 0% 100%);
@@ -58,6 +60,10 @@
 	--fc-header-border: hsl(225, 12%, 34%);
 
 	--fc-logo-fg: hsl(217 15% 47%);
+
+	--fc-inactive-overlay: hsl(0 0% 45% / 0.3);
+
+	--fc-shadow: hsl(0 0% 8% / 0.8);
 
 	--fc-button-transparent-bg--hover: hsl(217 10% 35% / 0.7);
 	--fc-input-bg: hsl(223 48% 27%);

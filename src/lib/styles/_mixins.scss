@@ -5,3 +5,30 @@
 		transition: background-color ease 300ms;
 	}
 }
+
+@mixin IconButton() {
+	display: inline-grid;
+	place-items: center;
+
+	position: relative;
+
+	padding: 0.1em;
+
+	font-size: 1.1em;
+
+	color: var(--fc-input-fg);
+
+	border-radius: 50%;
+	border: 2px solid transparent;
+
+	background-color: transparent;
+	@include Clickable();
+
+	&:hover,
+	&:focus-visible {
+		background-color: var(--fc-button-transparent-bg--hover);
+	}
+	&:active {
+		background-color: transparent;
+	}
+}

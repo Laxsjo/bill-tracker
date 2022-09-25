@@ -80,6 +80,14 @@ h2 {
 	font-size: var(--headerSize2);
 }
 
+hr {
+	width: 100%;
+	margin-block: var(--gap-200);
+
+	border: none;
+	border-bottom: 1px solid var(--fc-header-border);
+}
+
 pre {
 	font-size: 16px;
 	font-family: var(--font-mono);
