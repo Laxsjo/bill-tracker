@@ -6,9 +6,12 @@ export const prerender = true;
 const prisma = new PrismaClient();
 
 export const load: PageServerLoad = async () => {
-	const examples = await prisma.example.findMany();
+	// const examples = await prisma.example.findMany();
 
 	return {
-		examples
+		examples: [],
 	};
+	// return {
+	// 	examples
+	// };
 };

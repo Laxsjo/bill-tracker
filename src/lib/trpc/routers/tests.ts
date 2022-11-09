@@ -1,8 +1,10 @@
 import { z } from 'zod';
 import * as trpc from '@trpc/server';
+import { createRouter } from '$lib/trpc/factories';
 
-export default trpc
-	.router()
+console.log(createRouter);
+
+export default createRouter()
 	.query('randomNumber', {
 		input: z.object({ min: z.number().min(0), max: z.number().max(500) }),
 

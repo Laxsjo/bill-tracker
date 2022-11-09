@@ -35,6 +35,13 @@ export type InputType =
 	| 'url'
 	| 'wee';
 
+export type DeepRecord<K extends keyof any, T> =
+	// DeepRecord<K, T> | T;
+	{
+		[P in K]: DeepRecord<K, T> | T;
+	};
+
+// Utility types
 /**
  * Construct a type with the properties of T in type K set to optional.
  */
@@ -44,3 +51,5 @@ export type PartialBy<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
  * Construct a type with the properties of T in type K set to required.
  */
 export type RequiredBy<T, K extends keyof T> = Pick<Required<T>, K> & Omit<T, K>;
+
+export type ValueOf<T extends Record<string | number | symbol, unknown>> = T[keyof T];

@@ -1,6 +1,17 @@
 <script lang="ts">
 	import LoginCircle from '$lib/components/LoginCircle.svelte';
 	import Nav from './Nav.svelte';
+	import * as pages from '$lib/pages';
+	import { page } from '$app/stores';
+
+	const pagesList = [
+		pages.root,
+		pages.root.children.receipts,
+		pages.root.children.receipts.children.new,
+		pages.root.children.about,
+		pages.root.children.login,
+		pages.root.children.register,
+	];
 </script>
 
 <header>
@@ -9,15 +20,7 @@
 	</a>
 
 	<div class="nav">
-		<Nav
-			pages={[
-				{ url: '/', name: 'Home' },
-				{ url: '/receipt/new', name: 'New' },
-				{ url: '/about', name: 'About' },
-				{ url: '/login', name: 'Login' },
-				{ url: '/register', name: 'register' },
-			]}
-		/>
+		<Nav pages={pagesList} />
 	</div>
 
 	<div class="corner">

@@ -82,7 +82,6 @@
 		position: relative;
 
 		width: fit-content;
-		// padding: var(--gap-100);
 
 		border-radius: var(--borderRadius-medium);
 

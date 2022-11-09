@@ -2,9 +2,12 @@
 	import Header from '$lib/header/Header.svelte';
 	import '../app.scss';
 	import '$lib/styles/definitions.scss';
-	import { beforeNavigate } from '$app/navigation';
+	import { beforeNavigate, afterNavigate } from '$app/navigation';
 	import type { LayoutServerData } from './$types';
 	import { loggedIn } from '$lib/stores';
+	import { onMount } from 'svelte';
+	import * as pages from '$lib/pages';
+	import { page } from '$app/stores';
 
 	export let data: LayoutServerData;
 
@@ -22,9 +25,14 @@
 			}
 		}
 	});
-	// onMount(() => {
-	// 	console.log(data.userId);
-	// });
+
+	afterNavigate((navigation) => {
+		console.log('CurrentPage:', pages.getCurrent($page.routeId ?? ''));
+	});
+
+	onMount(() => {
+		console.log('CurrentPage:', pages.getCurrent($page.routeId ?? ''));
+	});
 </script>
 
 <Header />

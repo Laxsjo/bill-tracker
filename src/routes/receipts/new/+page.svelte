@@ -54,6 +54,7 @@
 	// $: console.log(parsed);
 	// $: console.log(parsed.amount.value);
 
+	let imageFile: File | undefined = undefined;
 	let imageSrc = '/No-Image-Placeholder.png';
 	let imageAlt = 'No image selected';
 
@@ -117,10 +118,48 @@
 			component.revert();
 		});
 
+		imageFile = file;
 		imageSrc = await readAsDataUrl(file);
 		imageAlt = 'Your uploaded image';
 
 		parsing = false;
+	}
+
+	async function upload() {
+		let binary = '';
+		let filename = '';
+		if (imageFile) {
+			filename = imageFile.name;
+			binary = await readAsBinaryString(imageFile);
+		}
+
+		const fields = {
+			amount: Number(parsed.amount.value),
+			date: String(parsed.date.value),
+			time: String(parsed.time.value),
+			merchantName: parsed.merchantName.value,
+			category: parsed.category.value,
+		};
+
+		const { receiptId } = await trpcClient.mutation('bill:upload', {
+			image: {
+				binary,
+				filename,
+			},
+			fields,
+		});
+
+		console.log('Created receipt with id', receiptId);
+	}
+
+	let name = 'Hello, my name is string';
+
+	async function test() {
+		console.log('Sending request...');
+
+		const result = await trpcClient.mutation('bill:test', { string: name });
+
+		console.log('Result: ', result);
 	}
 </script>
 
@@ -151,40 +190,20 @@
 				bind:this={components[name]}
 			/>
 		{/each}
-		<!-- {@debug parsed.amount.value} -->
-		<!-- <FieldInput
-			label="Amount"
-			defaultValue={String(parsed.amount.value)}
-			postfix="kr"
-			confidence={parsed.amount.confidence}
-			type="number"
-		/>
-		<FieldInput
-			label="Date"
-			defaultValue={String(parsed.date.value)}
-			confidence={parsed.date.confidence}
-			type="date"
-		/>
-		<FieldInput
-			label="Time"
-			defaultValue={String(parsed.time.value)}
-			confidence={parsed.time.confidence}
-			type="time"
-		/>
-		<FieldInput
-			label="Merchant Name"
-			defaultValue={String(parsed.merchantName.value)}
-			confidence={parsed.merchantName.confidence}
-			optional={true}
-		/>
-		<FieldInput
-			label="Category"
-			defaultValue={String(parsed.category.value)}
-			confidence={parsed.category.confidence}
-			optional={true}
-		/> -->
+		<div>
+			<button on:click={upload}>Save Receipt</button>
+		</div>
 	</div>
 </form>
+
+<hr />
+
+<div>
+	<input type="text" bind:value={name} />
+</div>
+<div>
+	<button on:click={test}>Test upload</button>
+</div>
 
 <style lang="scss">
 	.error {
@@ -199,12 +218,8 @@
 
 		border-radius: var(--borderRadius-large);
 
-		// .img {
-		// 	width: ;
-		// }
 		img {
 			display: block;
-			// width: min(15rem, 100%);
 			width: 15rem;
 
 			border-radius: var(--borderRadius-medium);

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { crossfade, fade } from 'svelte/transition';
+	import type * as pagesImport from '$lib/pages';
 
 	const [send, receive] = crossfade({
 		fallback(node) {
@@ -8,10 +9,7 @@
 		},
 	});
 
-	export let pages: {
-		url: string;
-		name: string;
-	}[];
+	export let pages: pagesImport.UnknownPage[];
 
 	// A constant id to be shared by all potential link markers
 	let id = 1;
@@ -19,11 +17,11 @@
 
 <nav>
 	<ul>
-		{#each pages as pageInfo (pageInfo.url)}
-			<li class:active={$page.url.pathname === pageInfo.url}>
-				<a href={pageInfo.url}>
-					{pageInfo.name}
-					{#if $page.url.pathname === pageInfo.url}
+		{#each pages as pageObj (pageObj.url)}
+			<li class:active={$page.url.pathname === pageObj.url}>
+				<a href={pageObj.url}>
+					{pageObj.name}
+					{#if $page.url.pathname === pageObj.url}
 						<span
 							in:receive={{ key: id }}
 							out:send={{ key: id }}

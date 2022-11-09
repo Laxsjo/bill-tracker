@@ -2,6 +2,7 @@ import { db } from '$lib/database';
 import type { Handle } from '@sveltejs/kit';
 import { createTRPCHandle } from 'trpc-sveltekit';
 import { router } from '$lib/trpc/server';
+import { createContext } from '$lib/trpc/factories';
 // import * as cookie from 'cookie';
 
 export const handle: Handle = async ({ event, resolve }) => {
@@ -22,6 +23,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	const response = await createTRPCHandle({
 		url: '/trpc',
+		createContext,
 		router,
 		event,
 		resolve,

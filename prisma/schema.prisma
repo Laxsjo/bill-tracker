@@ -7,17 +7,53 @@ datasource db {
   url      = env("DB_URL")
 }
 
-model example {
-  exampleId Int     @id(map: "examplename_pkey") @default(autoincrement()) @map("example_id")
-  text      String?
-  numbers   Int[]
+model Image {
+  id         Int  @id @default(autoincrement())
+  uploaderId Int
+  uploader   User @relation(fields: [uploaderId], references: [id])
+
+  data       Bytes
+  filename   String
+  width      Int
+  height     Int
+  cachedData Bytes
+  createdAt  DateTime @default(now())
+
+  receipt Receipt?
 }
 
 model User {
-  id            Int      @id @default(autoincrement())
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  username      String   @unique
+  id            Int       @id @default(autoincrement())
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  username      String    @unique
   passwordHash  String
-  userAuthToken String   @unique @default(cuid())
+  userAuthToken String    @unique @default(cuid())
+  receipts      Receipt[]
+  images        Image[]
+}
+
+model Receipt {
+  id Int @id @default(autoincrement())
+
+  userId  Int
+  user    User  @relation(fields: [userId], references: [id])
+  imageId Int   @unique
+  image   Image @relation(fields: [imageId], references: [id])
+
+  amount       Decimal @db.Money
+  merchantName String?
+  category     String?
+
+  timestamp DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Tests {
+  id    Int    @id @default(autoincrement())
+  field String
+
+  createdAt DateTime @default(now())
 }

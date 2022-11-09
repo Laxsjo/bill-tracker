@@ -14,7 +14,7 @@ export const actions: Actions = {
 			username: zfd.text(
 				z
 					.string()
-					.regex(/[z-z0-9_]+/i)
+					// .regex(/[z-z0-9_]+/i, { message: 'May only contain alpha numerics' })
 					.min(3)
 					.max(20)
 			),
@@ -57,7 +57,7 @@ export const actions: Actions = {
 			// if (e instanceof Joi.ValidationError) {
 			if (e instanceof z.ZodError) {
 				console.log(e);
-				return invalid(400, { error: e.message });
+				return invalid(400, { error: e.errors });
 			}
 			return invalid(500, { error: e });
 		}
